@@ -89,13 +89,13 @@ export class FetchApiDataService {
       .get(`${apiUrl}users/${username}/movies`, {
         headers: new HttpHeaders({ Authorization: 'Bearer ' + token }),
       })
-      .pipe(map(this.extractResponseData), CatchError(this.handleError));
+      .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
   // add movie to favorites
   addFavoriteMovie(MovieID: string): Observable<any> {
     const username = localStorage.getItem('user');
-    const token = tokenStorage.getItem('token');
+    const token = localStorage.getItem('token');
     return this.http
       .put(`${apiUrl}users/${username}/movies/${MovieID}`, {
         headers: new HttpHeaders({ Authorization: 'Bearer ' + token }),
@@ -136,7 +136,7 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  private extractResponseData(res: Response): any {
+  private extractResponseData(res: any): any {
     const body = res;
     return body || {};
   }
